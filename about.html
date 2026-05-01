@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Особиста інформація</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f9f5ee, #fff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      margin: 0;
+    }
+
+    nav {
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #5b3924;
+      font-weight: bold;
+    }
+
+    .info-box {
+      background: #fff8ee;
+      border-radius: 20px;
+      padding: 25px;
+      width: 420px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    #profileAvatar {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      color: #5b3924;
+    }
+
+    #profileNick {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    textarea {
+      width: 90%;
+      height: 100px;
+      border-radius: 10px;
+      border: 1px solid #c8a57a;
+      padding: 10px;
+      resize: none;
+      background: #fffaf3;
+      margin-bottom: 15px;
+    }
+
+    .avatars {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 15px 0;
+    }
+
+    .avatar-choice {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .avatar-choice:hover {
+      transform: scale(1.08);
+    }
+
+    .avatar-choice.selected {
+      border-color: #c8a57a;
+    }
+
+    button {
+      background-color: #c8a57a;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #b68d5b;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="Home.html">🏠 Головна</a> |
+    <a href="calendar.html">📅 Календар</a> |
+    <a href="all-notes.html">📖 Усі записи</a>
+  </nav>
+
+  <div class="info-box">
+    <img src="images/avatar1.jpg" alt="Аватар" id="profileAvatar">
+
+    <h1>Особиста інформація</h1>
+
+    <div id="profileNick">Користувач</div>
+
+    <p>Коротко про себе:</p>
+    <textarea id="aboutText" placeholder="Напишіть коротку інформацію про себе..."></textarea>
+
+    <p>Оберіть аватарку:</p>
+    <div class="avatars" id="avatars"></div>
+
+    <button onclick="saveProfile()">Зберегти профіль</button>
+  </div>
+
+  <script>
+    const allAvatars = [
+      "images/avatar1.jpg",
+      "images/avatar2.jpg",
+      "images/avatar3.jpg",
+      "images/avatar4.jpg",
+      "images/avatar5.jpg",
+      "images/avatar6.jpg",
+      "images/avatar7.jpg",
+      "images/avatar8.jpg",
+      "images/avatar9.jpg"
+    ];
+
+    let selectedAvatar = localStorage.getItem("avatar") || "images/avatar1.jpg";
+
+    const nickname = localStorage.getItem("nickname") || "Користувач";
+    const nickColor = localStorage.getItem("nickColor") || "#5b3924";
+    const savedAbout = localStorage.getItem("aboutText") || "";
+
+    document.getElementById("profileNick").textContent = nickname;
+    document.getElementById("profileNick").style.color = nickColor;
+    document.getElementById("profileAvatar").src = selectedAvatar;
+    document.getElementById("aboutText").value = savedAbout;
+
+    const avatarBox = document.getElementById("avatars");
+
+    allAvatars.forEach(src => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = "avatar-choice";
+
+      if (src === selectedAvatar) {
+        img.classList.add("selected");
+      }
+
+      img.onclick = function() {
+        document.querySelectorAll(".avatar-choice").forEach(a => a.classList.remove("selected"));
+        img.classList.add("selected");
+        selectedAvatar = src;
+        document.getElementById("profileAvatar").src = src;
+      };
+
+      avatarBox.appendChild(img);
+    });
+
+    function saveProfile() {
+      const aboutText = document.getElementById("aboutText").value;
+
+      localStorage.setItem("aboutText", aboutText);
+      localStorage.setItem("avatar", selectedAvatar);
+
+      alert("✅ Профіль збережено!");
+    }
+  </script>
+</body>
+</html>

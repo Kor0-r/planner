@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Реєстрація | Щоденник</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f5e8d0, #f9f9f9);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .register-box {
+      background: #fff8ee;
+      width: 420px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      color: #5b3924;
+      margin-top: 0;
+    }
+
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #c8a57a;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input[type="color"] {
+      width: 70px;
+      height: 40px;
+      border: none;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .avatars {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .avatar:hover {
+      transform: scale(1.08);
+    }
+
+    .avatar.selected {
+      border-color: #c8a57a;
+      box-shadow: 0 0 10px rgba(91,57,36,0.4);
+    }
+
+    button {
+      background-color: #c8a57a;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #b68d5b;
+    }
+
+    .small-text {
+      color: #5b3924;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="register-box">
+    <h1>Реєстрація у щоденнику 🌿</h1>
+
+    <p class="small-text">Оберіть нік, колір і аватарку для свого профілю.</p>
+
+    <input type="text" id="nickname" placeholder="Ваш псевдонім">
+
+    <p class="small-text">Колір псевдоніма:</p>
+    <input type="color" id="nickColor" value="#8a5cf6">
+
+    <p class="small-text">Оберіть аватарку:</p>
+    <div class="avatars" id="avatarContainer"></div>
+
+    <button onclick="registerUser()">Зареєструватися</button>
+  </div>
+
+  <script>
+    const allAvatars = [
+      "images/avatar1.jpg",
+      "images/avatar2.jpg",
+      "images/avatar3.jpg",
+      "images/avatar4.jpg",
+      "images/avatar5.jpg",
+      "images/avatar6.jpg",
+      "images/avatar7.jpg",
+      "images/avatar8.jpg",
+      "images/avatar9.jpg"
+    ];
+
+    let selectedAvatar = "";
+
+    function getRandomAvatars() {
+      let shuffled = allAvatars.sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, 3);
+    }
+
+    function showAvatars() {
+      const container = document.getElementById("avatarContainer");
+      const avatars = getRandomAvatars();
+
+      avatars.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.className = "avatar";
+
+        img.onclick = function() {
+          document.querySelectorAll(".avatar").forEach(a => a.classList.remove("selected"));
+          img.classList.add("selected");
+          selectedAvatar = src;
+        };
+
+        container.appendChild(img);
+      });
+    }
+
+    function registerUser() {
+      const nickname = document.getElementById("nickname").value.trim();
+      const nickColor = document.getElementById("nickColor").value;
+
+      if (nickname === "") {
+        alert("Введіть псевдонім.");
+        return;
+      }
+
+      if (selectedAvatar === "") {
+        alert("Оберіть аватарку.");
+        return;
+      }
+
+      localStorage.setItem("nickname", nickname);
+      localStorage.setItem("nickColor", nickColor);
+      localStorage.setItem("avatar", selectedAvatar);
+      localStorage.setItem("registered", "true");
+
+      window.location.href = "Home.html";
+    }
+
+    showAvatars();
+  </script>
+
+</body>
+</html>

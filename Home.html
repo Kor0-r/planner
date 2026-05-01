@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мій щоденник</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: linear-gradient(to right, #f5e8d0, #f9f9f9);
+}
+
+.header {
+  width: 100%;
+  height: 80px;
+  background-color: #c8a57a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.avatar-box {
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.square {
+  width: 90px;
+  height: 90px;
+  background-color: #123456;
+  position: absolute;
+  animation-name: spin;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  25% { background-color: yellow; }
+  100% { transform: rotate(360deg); }
+}
+
+.main {
+  margin-top: 110px;
+  width: 80%;
+  margin-left: 10%;
+  background: #fff8ee;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 30px;
+}
+
+.inner {
+  width: 60%;
+  margin-left: 20%;
+  text-align: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  background-color: #c8a57a;
+  padding: 12px 25px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+a:hover {
+  background-color: #b68d5b;
+}
+
+.small-text {
+  margin-top: 10px;
+  color: #5b3924;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>щоденник 🌿</h1>
+
+  <div class="avatar-box">
+    <div class="square"></div>
+    <img src="images/avatar1.jpg" class="user-avatar" id="userAvatar" alt="Аватарка">
+  </div>
+</div>
+
+<div class="main">
+  <div class="inner">
+    <p>Ласкаво просимо у електронний щоденник.</p>
+    <p class="small-text">Тут ви можете планувати дні в календарі, зберігати записи та час від часу перечитувати свої думки.</p>
+
+    <div class="menu">
+      <a href="calendar.html">📅 Календар</a>
+      <a href="all-notes.html">📖 Усі записи</a>
+      <a href="about.html">👤 Особиста інформація (профіль) </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const avatar = localStorage.getItem("avatar");
+
+  if (avatar) {
+    document.getElementById("userAvatar").src = avatar;
+  }
+</script>
+
+</body>
+</html>

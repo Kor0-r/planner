@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Усі записи</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f9f5ee, #fff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      margin: 0;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #5b3924;
+      font-weight: bold;
+    }
+
+    h1 {
+      color: #5b3924;
+    }
+
+    .note {
+      background: #fff8ee;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      width: 350px;
+      margin-bottom: 10px;
+      word-wrap: break-word;
+    }
+
+    .date {
+      font-weight: bold;
+      color: #6a422b;
+      margin-bottom: 8px;
+    }
+
+    .empty {
+      color: #6a422b;
+      background: #fff8ee;
+      padding: 15px;
+      border-radius: 15px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="Home.html">🏠 Головна</a> |
+    <a href="calendar.html">📅 Календар</a> |
+    <a href="about.html">👤 (профіль) </a>
+  </nav>
+
+  <h1>Усі записи</h1>
+  <div id="notesList"></div>
+
+  <script>
+    const notesList = document.getElementById('notesList');
+    let notes = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+
+      if (key.startsWith('note_')) {
+        const date = key.replace('note_', '');
+        const value = localStorage.getItem(key);
+
+        if (value.trim() !== '') {
+          notes.push({ date: date, text: value });
+        }
+      }
+    }
+
+    notes.sort((a, b) => a.date.localeCompare(b.date));
+
+    if (notes.length === 0) {
+      notesList.innerHTML = '<div class="empty">Поки що записів немає.</div>';
+    } else {
+      notes.forEach(note => {
+        const div = document.createElement('div');
+        div.classList.add('note');
+        div.innerHTML = `<div class="date">${note.date}</div><div>${note.text}</div>`;
+        notesList.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
